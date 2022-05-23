@@ -1,7 +1,7 @@
 package com.study.springbootstudy.common;
 
 import cn.hutool.core.io.IORuntimeException;
-import com.study.springbootstudy.model.ResDto;
+import com.study.springbootstudy.model.Result;
 import com.study.springbootstudy.exception.MyFileNotFoundException;
 import com.study.springbootstudy.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
@@ -31,16 +31,16 @@ public class GlobalExceptionHandle {
      * 业务异常
      */
     @ExceptionHandler(value = ServiceException.class)
-    public ResDto<String> serviceException(ServiceException e) {
+    public Result<String> serviceException(ServiceException e) {
         log.error("系统异常:", e);
-        return new ResDto<>(e.getCode(), e.getMsg());
+        return new Result<>(e.getCode(), e.getMsg());
     }
 
     /**
      * 处理入参异常
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResDto<String> handleIllegalParamException(MethodArgumentNotValidException e) {
+    public Result<String> handleIllegalParamException(MethodArgumentNotValidException e) {
         String message = "参数格式校验失败";
         List<FieldError> errors = e.getBindingResult().getFieldErrors();
         if (errors.size() > 0) {
@@ -48,34 +48,34 @@ public class GlobalExceptionHandle {
                     .collect(Collectors.joining(","));
         }
         log.error("系统异常:", e);
-        return new ResDto<>(PARAMETER_IS_FAILURE, message);
+        return new Result<>(PARAMETER_IS_FAILURE, message);
     }
 
     /**
      * 请求参数类型转换异常
      */
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
-    public ResDto<String> httpMessageNotReadableException(HttpMessageNotReadableException e) {
+    public Result<String> httpMessageNotReadableException(HttpMessageNotReadableException e) {
         log.error("系统异常:", e);
-        return new ResDto<>(PARAMETER_IS_FAILURE, e.getMessage());
+        return new Result<>(PARAMETER_IS_FAILURE, e.getMessage());
     }
 
     /**
      * 文件不存在异常
      */
     @ExceptionHandler(value = {MyFileNotFoundException.class, IORuntimeException.class, NoSuchFileException.class})
-    public ResDto<String> myFileNotFoundException(Exception e) {
+    public Result<String> myFileNotFoundException(Exception e) {
         log.error("系统异常:", e);
-        return new ResDto<>(FILE_NOTFOUND, e.getMessage());
+        return new Result<>(FILE_NOTFOUND, e.getMessage());
     }
 
     /**
      * 其他类型的异常
      */
     @ExceptionHandler(value = Exception.class)
-    public ResDto<String> handle(Exception e) {
+    public Result<String> handle(Exception e) {
         log.error("系统异常:", e);
-        return new ResDto<>(FAIL_CODE, "系统异常，请联系管理员");
+        return new Result<>(FAIL_CODE, "系统异常，请联系管理员");
     }
 
 }

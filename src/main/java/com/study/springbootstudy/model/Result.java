@@ -12,10 +12,13 @@ import static com.study.springbootstudy.common.ResponseCode.FAIL_CODE;
 import static com.study.springbootstudy.common.ResponseCode.SUCCESS_CODE;
 
 
+/**
+ * @author zhoufan
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResDto<T> implements Serializable {
+public class Result<T> implements Serializable {
 
 
     public static final long serialVersionUID = 42L;
@@ -25,15 +28,15 @@ public class ResDto<T> implements Serializable {
     private T data;
 
 
-    public static final ResDto<String> SUCCESS = new ResDto<String>(null);
-    public static final ResDto<String> FAIL = new ResDto<String>(FAIL_CODE, null);
+    public static final Result<String> SUCCESS = new Result<String>(null);
+    public static final Result<String> FAIL = new Result<String>(FAIL_CODE, null);
 
-    public ResDto(int code, String message) {
+    public Result(int code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public ResDto(T data) {
+    public Result(T data) {
         this.code = SUCCESS_CODE;
         this.data = data;
     }
@@ -43,7 +46,7 @@ public class ResDto<T> implements Serializable {
      * @param data
      * @return ResDto
      */
-    public ResDto<T> setBody(T data) {
+    public Result<T> setBody(T data) {
         this.data = data;
         return this;
     }
@@ -54,8 +57,8 @@ public class ResDto<T> implements Serializable {
      * @param <T>
      * @return
      */
-    public static <T> ResDto<T> createSuccess(T data) {
-        ResDto<T> resp = new ResDto<>();
+    public static <T> Result<T> createSuccess(T data) {
+        Result<T> resp = new Result<>();
         resp.setCode(ResponseCodeEnum.SUCCESS.getCode());
         resp.setMessage(ResponseCodeEnum.SUCCESS.getMessage());
         return resp.setBody(data);
@@ -65,29 +68,29 @@ public class ResDto<T> implements Serializable {
      * 创建成功返回ResDto
      * @return ResDto
      */
-    public static  ResDto createSuccess() {
-        ResDto resp = new ResDto();
+    public static Result createSuccess() {
+        Result resp = new Result();
         resp.setCode(ResponseCodeEnum.SUCCESS.getCode());
         resp.setMessage(ResponseCodeEnum.SUCCESS.getMessage());
         return resp;
     }
 
-    public static ResDto createError(int code, String message) {
-        ResDto resp = new ResDto();
+    public static Result createError(int code, String message) {
+        Result resp = new Result();
         resp.code = code;
         resp.message = message;
         return resp;
     }
 
-    public static ResDto createError(ResponseCodeEnum responseCode,String extraMessage) {
-        ResDto resp = new ResDto();
+    public static Result createError(ResponseCodeEnum responseCode, String extraMessage) {
+        Result resp = new Result();
         resp.setCode(responseCode.getCode());
         resp.setMessage(responseCode.getMessage()+ CommonConstants.SYMBOL_COMMA+extraMessage);
         return resp;
     }
 
-    public static ResDto createInterError() {
-        ResDto resp = new ResDto();
+    public static Result createInterError() {
+        Result resp = new Result();
         resp.setCode(ResponseCodeEnum.ERROR_INTERNAL.getCode());
         resp.setMessage(ResponseCodeEnum.ERROR_INTERNAL.getMessage());
         return resp;

@@ -2,7 +2,7 @@ package com.study.springbootstudy.aspect;
 
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson2.JSON;
-import com.study.springbootstudy.model.ResDto;
+import com.study.springbootstudy.model.Result;
 import com.study.springbootstudy.exception.ServiceException;
 import com.study.springbootstudy.model.Logger;
 import com.study.springbootstudy.service.LoggerService;
@@ -80,8 +80,8 @@ public class LoggerAspect {
             logger.setTime(DateUtil.date(start));
 
             result = joinPoint.proceed();
-            if (result instanceof ResDto) {
-                logger.setSystemStatusCode(((ResDto<?>) result).getCode().toString());
+            if (result instanceof Result) {
+                logger.setSystemStatusCode(((Result<?>) result).getCode().toString());
             }
             logger.setReturnData(JSON.toJSONString(result));
         } catch (Throwable e) {
