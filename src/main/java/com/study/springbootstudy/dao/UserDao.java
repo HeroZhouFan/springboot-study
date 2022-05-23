@@ -13,6 +13,4 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserDao extends BaseMapper<User> {
 
-    //@Select("select * from user")
-    //List<User> queryAllUser();
 }

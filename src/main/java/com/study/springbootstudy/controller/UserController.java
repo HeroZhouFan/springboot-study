@@ -26,7 +26,7 @@ public class UserController {
     //@ApiOperation("查看所有用户")
     @GetMapping("/queryAllUser")
     public List<User> queryAllUser(){
-        return userService.queryAllUser();
+        return userService.list();
     }
 
 }

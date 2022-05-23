@@ -97,7 +97,7 @@ public class LoggerAspect {
             logger.setReturnTime(DateUtil.date(end));
             logger.setTimeConsuming((int) timeCost);
             logger.setHttpStatusCode(getResponse().getStatus() + "");
-            loggerService.insert(logger);
+            loggerService.save(logger);
         }
         return result;
     }

@@ -31,7 +31,7 @@ public class ExcelController {
         String fileName = URLEncoder.encode("用户信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
         EasyExcel.write(response.getOutputStream(), User.class).sheet("模板")
-                .doWrite(userService.queryAllUser());
+                .doWrite(userService.list());
     }
 
 }
